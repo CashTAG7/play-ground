@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as mainRouteRouteImport } from './routes/(main)/route'
 import { Route as mainIndexRouteImport } from './routes/(main)/index'
+import { Route as mainAnimatedPunkIconIndexRouteImport } from './routes/(main)/animated-punk-icon/index'
 
 const mainRouteRoute = mainRouteRouteImport.update({
   id: '/(main)',
@@ -21,24 +22,33 @@ const mainIndexRoute = mainIndexRouteImport.update({
   path: '/',
   getParentRoute: () => mainRouteRoute,
 } as any)
+const mainAnimatedPunkIconIndexRoute =
+  mainAnimatedPunkIconIndexRouteImport.update({
+    id: '/animated-punk-icon/',
+    path: '/animated-punk-icon/',
+    getParentRoute: () => mainRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof mainIndexRoute
+  '/animated-punk-icon/': typeof mainAnimatedPunkIconIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof mainIndexRoute
+  '/animated-punk-icon': typeof mainAnimatedPunkIconIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(main)': typeof mainRouteRouteWithChildren
   '/(main)/': typeof mainIndexRoute
+  '/(main)/animated-punk-icon/': typeof mainAnimatedPunkIconIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/animated-punk-icon/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(main)' | '/(main)/'
+  to: '/' | '/animated-punk-icon'
+  id: '__root__' | '/(main)' | '/(main)/' | '/(main)/animated-punk-icon/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,15 +71,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof mainIndexRouteImport
       parentRoute: typeof mainRouteRoute
     }
+    '/(main)/animated-punk-icon/': {
+      id: '/(main)/animated-punk-icon/'
+      path: '/animated-punk-icon'
+      fullPath: '/animated-punk-icon/'
+      preLoaderRoute: typeof mainAnimatedPunkIconIndexRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
   }
 }
 
 interface mainRouteRouteChildren {
   mainIndexRoute: typeof mainIndexRoute
+  mainAnimatedPunkIconIndexRoute: typeof mainAnimatedPunkIconIndexRoute
 }
 
 const mainRouteRouteChildren: mainRouteRouteChildren = {
   mainIndexRoute: mainIndexRoute,
+  mainAnimatedPunkIconIndexRoute: mainAnimatedPunkIconIndexRoute,
 }
 
 const mainRouteRouteWithChildren = mainRouteRoute._addFileChildren(

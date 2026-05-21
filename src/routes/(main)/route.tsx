@@ -5,10 +5,5 @@ export const Route = createFileRoute("/(main)")({
 });
 
 function RouteComponent() {
-  return (
-    <div>
-      Hello "/(main)"!
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 }
